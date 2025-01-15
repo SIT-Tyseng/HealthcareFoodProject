@@ -43,7 +43,19 @@ class SupervisedDataset(Dataset):
         return len(self.raw_data)
 
     def __getitem__(self, i) -> Dict[str, torch.Tensor]:
-        image = Image.open(self.raw_data[i]["image"]).convert("RGB")
+        current_dir = os.path.dirname(__file__)
+        image_path = os.path.join(current_dir, self.raw_data[i]["image"])
+        # print("path: " + image_path)
+        exts = [".JPG", ".jpg", ".png"]
+        for ext in exts:
+            new_image_path = os.path.splitext(image_path)[0] + ext
+            if os.path.exists(new_image_path):
+                print(f"Image found with extension {ext}")
+                break
+            else:
+                if ext == exts[-1]:
+                    raise FileNotFoundError(f"Image file not found: {image_path}")
+        image = Image.open(new_image_path).convert("RGB")
         ret = preprocess(
             image,
             self.raw_data[i]["conversations"],
