@@ -1,3 +1,21 @@
 [submodule "MiniCPM-V"]
 	path = MiniCPM-V
 	url = https://github.com/OpenBMB/MiniCPM-V
+[submodule "LLaVA"]
+	path = LLaVA
+	url = https://github.com/LLaVA-VL/LLaVA-NeXT
+[submodule "SAM2"]
+	path = SAM2
+	url = https://github.com/facebookresearch/sam2
+[submodule "QwenLM"]
+	path = QwenLM
+	url = https://github.com/QwenLM/Qwen2.5-VL
+[submodule "VILA"]
+	path = VILA
+	url = https://github.com/NVlabs/VILA
+[submodule "Janus"]
+	path = Janus
+	url = https://github.com/deepseek-ai/Janus
+[submodule "FoodLMM"]
+	path = FoodLMM
+	url = https://github.com/YuehaoYin/FoodLMM
