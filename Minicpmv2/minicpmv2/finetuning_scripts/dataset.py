@@ -55,7 +55,7 @@ class SupervisedDataset(Dataset):
             else:
                 if ext == exts[-1]:
                     raise FileNotFoundError(f"Image file not found: {image_path}")
-        image = Image.open(new_image_path).convert("RGB")
+        image = Image.open(new_image_path).convert("RGB")  
         ret = preprocess(
             image,
             self.raw_data[i]["conversations"],

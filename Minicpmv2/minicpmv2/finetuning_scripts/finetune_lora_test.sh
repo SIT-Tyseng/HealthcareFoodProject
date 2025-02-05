@@ -1,6 +1,8 @@
 #!/bin/bash
 
-GPUS_PER_NODE=2
+export CUDA_VISIBLE_DEVICES=0
+
+GPUS_PER_NODE=1
 NNODES=1
 NODE_RANK=0
 MASTER_ADDR=localhost
@@ -9,8 +11,8 @@ MASTER_PORT=6001
 MODEL="openbmb/MiniCPM-V-2"
 # ATTENTION: specify the path to your training data, which should be a json file consisting of a list of conversations.
 # See the section for finetuning in README for more information.
-DATA="/itp2/training_datasets/train.json"
-EVAL_DATA="/itp2/training_datasets/test.json"
+DATA="../json_datasets/train.json"
+EVAL_DATA="../json_datasets/test.json"
 LLM_TYPE="minicpm" 
 # if use openbmb/MiniCPM-V-2, please set LLM_TYPE=minicpm
 #if use openbmb/MiniCPM-Llama3-V-2_5, please set LLM_TYPE=llama3
