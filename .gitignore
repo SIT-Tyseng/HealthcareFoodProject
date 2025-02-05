@@ -1,1 +1,6 @@
 Minicpmv2/minicpmv2/training_datasets/
+Minicpmv2/minicpmv2/finetuning_scripts/output
+yolov11/SGFood-docker
+yolov11/datasets
+yolov11/runs
+*.pyc
