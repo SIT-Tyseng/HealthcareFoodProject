@@ -2,15 +2,22 @@
 
 This repo is mainly focusing on nutrition assessment related models, such as VLM (Visual Language Model), LMM (Large Multi-modal Model), and NuNet (Food Mass Prediction Model). Following are the list of the models which can be found in this repo:
 
-VLM:
+---
+## Models
+### VLM:
 - miniCPM
-- Qwen2.5-VL (to be included)
-- LLaVA-NEXT (to be included)
-- SAM2 (to be included)
-- VILA (to be included)
+- Qwen2.5-VL 
+- LLaVA-NEXT 
+- SAM2 
+- VILA 
+- Janus 
 
-LMM:
+### LMM:
 - FoodLLM
 
-Food Mass Prediction Model:
+### Food Mass Prediction Model:
 - NuNet
+
+---
+## Flash Attention installation 
+If the environment requires `flash_attn` package and the system fails to install it after using `pip install flash-attn --no-build-isolation`, go to the `wheels` directory to search for the wheel file and install it with `pip install [wheel file]`, or check out the [release page](https://github.com/Dao-AILab/flash-attention/releases) for the correct wheel file version.  
