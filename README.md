@@ -31,7 +31,6 @@ cd NutritionAssessmentProject
 2. Run the following docker command to build the image:
 ```
 docker build \
---build-context wheels=./Dev/wheels \
 -f ./Dev/dockers/FoodLMM/Dockerfile \
 -t foodlmm \
 ./OpenSource/FoodLMM

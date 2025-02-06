@@ -25,7 +25,7 @@ COPY --chown=appuser:appgroup requirements.txt /app/
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy the wheel file and set ownership
-COPY --chown=appuser:appgroup --from=wheels flash_attn-2.3.5+cu117torch1.13cxx11abiTRUE-cp310-cp310-linux_x86_64.whl /app/
+COPY --chown=appuser:appgroup ./Dev/wheels/flash_attn-2.3.5+cu117torch1.13cxx11abiTRUE-cp310-cp310-linux_x86_64.whl /app/
 
 # Install the flash_attn package
 RUN pip3 install --no-cache-dir flash_attn-2.3.5+cu117torch1.13cxx11abiTRUE-cp310-cp310-linux_x86_64.whl
