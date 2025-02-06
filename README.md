@@ -20,4 +20,28 @@ This repo is mainly focusing on nutrition assessment related models, such as VLM
 
 ---
 ## Flash Attention installation 
-If the environment requires `flash_attn` package and the system fails to install it after using `pip install flash-attn --no-build-isolation`, go to the `wheels` directory to search for the wheel file and install it with `pip install [wheel file]`, or check out the [release page](https://github.com/Dao-AILab/flash-attention/releases) for the correct wheel file version.  
+If the environment requires `flash_attn` package and the system fails to install it after using `pip install flash-attn --no-build-isolation`, go to the `wheels` directory to search for the wheel file and install it with `pip install [wheel file]`, or check out the [release page](https://github.com/Dao-AILab/flash-attention/releases) for the correct wheel file version. 
+
+--- 
+## Docker 
+1. Go to the root directory of the repo: 
+```
+cd NutritionAssessmentProject
+```
+2. Run the following docker command to build the image:
+```
+docker build \
+--build-context wheels=./Dev/wheels \
+-f ./Dev/dockers/FoodLMM/Dockerfile \
+-t foodlmm \
+./OpenSource/FoodLMM
+```
+3. Run the container in background mode: 
+```
+docker run -d -it foodlmm bash 
+```
+
+4. Access the container: 
+```
+docker exec -it <container_id> /bin/bash
+```
