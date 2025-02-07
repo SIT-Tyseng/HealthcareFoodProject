@@ -44,3 +44,12 @@ docker run -d -it foodlmm bash
 ```
 docker exec -it <container_id> /bin/bash
 ```
+
+---
+## Download pretrain weight for Inference 
+To download the pretrain weight, use the following command 
+```
+mkdir storage && cd storage [prefer to be outside of the repo folder]
+GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/Yueha0/FoodLMM-Chat
+git lfs pull
+```
