@@ -1,4 +1,4 @@
-# NutritionAssessmentProject
+# HealthcareFoodProject
 
 This repo is mainly focusing on nutrition assessment related models, such as VLM (Visual Language Model), LMM (Large Multi-modal Model), and NuNet (Food Mass Prediction Model). Following are the list of the models which can be found in this repo:
 
