@@ -50,7 +50,7 @@ docker exec -it <container_id> /bin/bash
 5. Run the Deployment command:
 ```
 cd app
-CUDA_VISIBLE_DEVICES=0 python online_demo.py --version=/storage/
+CUDA_VISIBLE_DEVICES=0 python online_demo.py --version=/storage/FoodLMM-Chat
 ```
 ---
 ## Download pretrain weight for Inference 
