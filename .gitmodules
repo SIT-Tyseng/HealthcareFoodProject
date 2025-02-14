@@ -19,3 +19,6 @@
 [submodule "FoodLMM"]
 	path = FoodLMM
 	url = https://github.com/YuehaoYin/FoodLMM
+[submodule "OpenSource/VMamba"]
+	path = OpenSource/VMamba
+	url = https://github.com/MzeroMiko/VMamba
