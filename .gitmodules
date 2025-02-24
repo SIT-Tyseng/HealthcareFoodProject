@@ -22,3 +22,9 @@
 [submodule "OpenSource/VMamba"]
 	path = OpenSource/VMamba
 	url = https://github.com/MzeroMiko/VMamba
+[submodule "OpenSource/ResVMamba"]
+	path = OpenSource/ResVMamba
+	url = https://github.com/ChiShengChen/ResVMamba.git
+[submodule "Dev/VLM_Fine_Tuning/sandy_qwen_fine_tuning"]
+	path = Dev/VLM_Fine_Tuning/sandy_qwen_fine_tuning
+	url = https://github.com/sandy1990418/Finetune-Qwen2.5-VL.git
