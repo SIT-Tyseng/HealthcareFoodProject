@@ -4,3 +4,4 @@ Dev/yolov11/SGFood-docker
 Dev/yolov11/datasets
 Dev/yolov11/runs
 *.pyc
+*.json
