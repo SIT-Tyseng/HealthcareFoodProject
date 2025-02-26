@@ -1,6 +1,9 @@
 from datasets import (
     concatenate_datasets,
     interleave_datasets,
+    Dataset,
+    IterableDataset,
+    DatasetDict,
 )
 from utils.logger import logger
 from typing import List, Union, Any, Dict, TYPE_CHECKING
