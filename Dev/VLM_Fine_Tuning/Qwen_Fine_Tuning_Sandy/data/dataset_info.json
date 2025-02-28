@@ -1,4 +1,13 @@
 {
+    "food_visual_instructions_train": {
+        "hf_hub_url": "AdaptLLM/food-visual-instructions",
+        "split": "train",
+        "subset": "image_caption_and_synthetic_task",
+        "columns": {
+          "text": "messages",
+          "image": "image"
+        }
+    },
     "uecfood256_alpaca_train": {
       "file_name": "data/uecfood256_train_alpaca.json",
       "formatting": "alpaca",

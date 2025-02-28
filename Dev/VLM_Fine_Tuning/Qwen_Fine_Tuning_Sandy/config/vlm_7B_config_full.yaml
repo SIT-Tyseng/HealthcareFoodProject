@@ -2,6 +2,7 @@
 model_name_or_path: Qwen/Qwen2.5-VL-7B-Instruct
 # quantization_bit: 0  # No quantization needed on H200
 trust_remote_code: true
+# use_unsloth: true
 
 ### method
 stage: sft  # rm, ppo, pt
@@ -11,23 +12,23 @@ finetuning_type: full  # full, freeze, lora
 # lora_target: all  # Defines which model modules receive LoRA adapters. "all" applies LoRA to all compatible layers (e.g., attention projections like q_proj, v_proj). Maximizes adaptation across the model; alternatives (e.g., specific layers) might limit scope.
 
 ### dataset  
-dataset: uecfood256_alpaca_train # Train set (includes val split) 
-dataset_dir: /storage/dataset/
+dataset: food_visual_instructions_train # Train set (includes val split) 
+# dataset_dir: /storage/dataset/
 cutoff_len: 2048 # Maximum sequence length (tokens) for text inputs/outputs.
 # max_samples: 1000
 overwrite_cache: true # Controls whether to regenerate cached preprocessed data. Ensures fresh data processing, useful if the dataset changes.
 preprocessing_num_workers: 16 # Number of CPU workers for data preprocessing
 
 ### output
-output_dir: saves/Qwen2.5-VL-7B-Instruct/lora/uecfood256-epoch3 # Directory to save checkpoints, logs, and results.
+output_dir: saves/Qwen2.5-VL-7B-Instruct/full/foodVI-epoch3 # Directory to save checkpoints, logs, and results.
 logging_steps: 10 # Frequency (in steps) of logging training metrics (e.g., loss).
 save_steps: 500 # Frequency (in steps) of saving model checkpoints.
 plot_loss: true # Enables plotting of training/validation loss.
 overwrite_output_dir: true # Allows overwriting existing output directory.
 
 ### train
-per_device_train_batch_size: 2  # Fits 24GB with 4-bit quantization. Number of samples per GPU per training step. Limited by VRAM; higher values (e.g., 4) might cause OOM.
-gradient_accumulation_steps: 4  # Effective batch size = 8. Number of steps to accumulate gradients before updating weights.4 simulates a batch size of 8 (2 × 4). Effective batch size of 8 improves training stability without exceeding memory.
+per_device_train_batch_size: 1  # Fits 24GB with 4-bit quantization. Number of samples per GPU per training step. Limited by VRAM; higher values (e.g., 4) might cause OOM.
+gradient_accumulation_steps: 1  # Effective batch size = 8. Number of steps to accumulate gradients before updating weights.4 simulates a batch size of 8 (2 × 4). Effective batch size of 8 improves training stability without exceeding memory.
 learning_rate: 5.0e-5 # Step size for weight updates. Balances learning speed and stability; pretrained models need small updates.
 num_train_epochs: 3.0 # Number of passes over the train dataset. With ~18,000 train images (after val split), 3 epochs (~6,750 steps) suffice for adaptation.
 lr_scheduler_type: cosine # Learning rate schedule over training. cosine decays LR smoothly from initial value to near-zero. Improves convergence vs. linear schedules; common in fine-tuning.
