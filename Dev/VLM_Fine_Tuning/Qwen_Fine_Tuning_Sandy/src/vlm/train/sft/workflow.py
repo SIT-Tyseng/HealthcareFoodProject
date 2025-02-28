@@ -116,6 +116,7 @@ def run_sft(
 
     # Training
     if training_args.do_train:
+        model.gradient_checkpointing_enable()
         train_result = trainer.train(
             resume_from_checkpoint=training_args.resume_from_checkpoint
         )
