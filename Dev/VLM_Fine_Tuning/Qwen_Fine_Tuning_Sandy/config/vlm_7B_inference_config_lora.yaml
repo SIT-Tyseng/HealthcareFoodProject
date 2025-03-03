@@ -1,0 +1,10 @@
+### model
+# model_name_or_path: Qwen/Qwen2-VL-2B-Instruct
+# model_name_or_path: saves/Qwen2.5-VL-3B-Instruct-Lora-SFT
+# model_name_or_path: Qwen/Qwen2.5-VL-3B-Instruct
+model_name_or_path: /storage/dataset/training_data/merged/Qwen2.5-VL-7B-Instruct-Lora-SFT-Checkpoint-13893
+
+
+max_new_tokens: 100
+dataset: food_visual_instructions_test #, test_dataset
+trust_remote_code: true
