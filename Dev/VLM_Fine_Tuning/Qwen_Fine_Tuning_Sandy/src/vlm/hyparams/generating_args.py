@@ -75,10 +75,10 @@ class GeneratingArguments:
             "help": "Exponential penalty to the length that is used with beam-based generation."
         },
     )
-    default_system: Optional[str] = field(
-        default=None,
-        metadata={"help": "Default system message to use in chat completion."},
-    )
+    # default_system: Optional[str] = field(
+    #     default=None,
+    #     metadata={"help": "Default system message to use in chat completion."},
+    # )
     skip_special_tokens: bool = field(
         default=True,
         metadata={"help": "Whether or not to remove special tokens in the decoding."},
