@@ -8,6 +8,15 @@
           "image": "image"
         }
     },
+    "food_visual_instructions_test": {
+        "hf_hub_url": "AdaptLLM/food-VQA-benchmark",
+        "split": "test",
+        "subset": "Food101",
+        "columns": {
+          "text": "input",
+          "image": "image"
+        }
+    },
     "uecfood256_alpaca_train": {
       "file_name": "data/uecfood256_train_alpaca.json",
       "formatting": "alpaca",
