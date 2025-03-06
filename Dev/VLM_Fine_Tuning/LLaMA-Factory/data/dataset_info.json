@@ -1,4 +1,29 @@
 {
+  "food_visual_instructions_train": {
+        "hf_hub_url": "AdaptLLM/food-visual-instructions",
+        "formatting": "sharegpt",
+        "split": "train",
+        "subset": "image_caption_and_synthetic_task",
+        "columns": {
+          "messages": "messages",
+          "images": "images"
+        },
+        "tags": {
+          "role_tag": "role",
+          "content_tag": "content",
+          "user_tag": "user",
+          "assistant_tag": "assistant"
+        }
+  },
+  "food_visual_instructions_test": {
+      "hf_hub_url": "AdaptLLM/food-VQA-benchmark",
+      "split": "test",
+      "subset": "Food101",
+      "columns": {
+        "messages": "input",
+        "images": "image"
+      }
+  },
   "identity": {
     "file_name": "identity.json"
   },
