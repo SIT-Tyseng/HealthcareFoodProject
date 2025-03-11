@@ -135,6 +135,8 @@ cython_debug/
 *.pyc
 logs
 saves
+output
+custom_data
 
 .git
 .gitignore
