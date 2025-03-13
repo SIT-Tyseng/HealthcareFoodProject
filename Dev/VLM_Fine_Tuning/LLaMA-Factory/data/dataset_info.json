@@ -1,4 +1,32 @@
 {
+  "uecfood256_sharegpt_train": {
+      "file_name": "uecfood256_sharegpt_train.json",
+      "formatting": "sharegpt",
+      "columns": {
+        "messages": "messages",
+        "images": "images"
+      },
+        "tags": {
+          "role_tag": "role",
+          "content_tag": "content",
+          "user_tag": "user",
+          "assistant_tag": "assistant"
+      }
+    },
+  "uecfood256_sharegpt_test": {
+    "file_name": "uecfood256_sharegpt_test.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages",
+      "images": "images"
+    },
+      "tags": {
+        "role_tag": "role",
+        "content_tag": "content",
+        "user_tag": "user",
+        "assistant_tag": "assistant"
+    }
+  },
   "food_visual_instructions_train": {
         "hf_hub_url": "AdaptLLM/food-visual-instructions",
         "formatting": "sharegpt",
