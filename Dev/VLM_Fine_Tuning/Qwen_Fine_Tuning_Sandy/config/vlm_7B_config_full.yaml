@@ -12,7 +12,7 @@ finetuning_type: full  # full, freeze, lora
 # lora_target: all  # Defines which model modules receive LoRA adapters. "all" applies LoRA to all compatible layers (e.g., attention projections like q_proj, v_proj). Maximizes adaptation across the model; alternatives (e.g., specific layers) might limit scope.
 
 ### dataset  
-dataset: food_visual_instructions_train # Train set (includes val split) 
+dataset: uecfood256_sharegpt_train # Train set (includes val split) 
 # dataset_dir: /storage/dataset/
 cutoff_len: 2048 # Maximum sequence length (tokens) for text inputs/outputs.
 # max_samples: 1000
@@ -20,7 +20,7 @@ overwrite_cache: true # Controls whether to regenerate cached preprocessed data.
 preprocessing_num_workers: 16 # Number of CPU workers for data preprocessing
 
 ### output
-output_dir: output/training_data/saves/Qwen2.5-VL-7B-Instruct/full/foodVI-epoch3 # Directory to save checkpoints, logs, and results.
+output_dir: output/training_data/saves/Qwen2.5-VL-7B-Instruct/full/uecfood256-sharegpt-epoch1 # Directory to save checkpoints, logs, and results.
 logging_steps: 10 # Frequency (in steps) of logging training metrics (e.g., loss).
 save_steps: 500 # Frequency (in steps) of saving model checkpoints.
 plot_loss: true # Enables plotting of training/validation loss.
@@ -30,12 +30,14 @@ overwrite_output_dir: true # Allows overwriting existing output directory.
 per_device_train_batch_size: 1  # Fits 24GB with 4-bit quantization. Number of samples per GPU per training step. Limited by VRAM; higher values (e.g., 4) might cause OOM.
 gradient_accumulation_steps: 1  # Effective batch size = 8. Number of steps to accumulate gradients before updating weights.4 simulates a batch size of 8 (2 × 4). Effective batch size of 8 improves training stability without exceeding memory.
 learning_rate: 5.0e-5 # Step size for weight updates. Balances learning speed and stability; pretrained models need small updates.
-num_train_epochs: 3.0 # Number of passes over the train dataset. With ~18,000 train images (after val split), 3 epochs (~6,750 steps) suffice for adaptation.
+num_train_epochs: 1.0 # Number of passes over the train dataset. With ~18,000 train images (after val split), 3 epochs (~6,750 steps) suffice for adaptation.
 lr_scheduler_type: cosine # Learning rate schedule over training. cosine decays LR smoothly from initial value to near-zero. Improves convergence vs. linear schedules; common in fine-tuning.
 warmup_ratio: 0.1 # Fraction of total steps for LR warmup (gradual increase). 0.1 means 10% of steps (~675 steps) ramp up LR. Stabilizes early training, especially with small batches. 
 bf16: true  # RTX 4090 supports BF16. Enables BF16 (Brain Float 16) mixed precision training. Reduces memory usage (vs. FP32) and speeds up training with minimal precision loss.
 ddp_timeout: 180000000 #Timeout (in seconds) for Distributed Data Parallel (DDP) operations. ~5,000 hours is effectively infinite for a single GPU. Prevents timeout errors; irrelevant here (single GPU), but kept for compatibility. 
 use_accelerate: false # Enables Hugging Face Accelerate for distributed training. false since you’re using a single GPU. Simplifies setup; set to true if scaling to multi-GPU later.
+weight_decay: 0.01
+report_to: wandb
 
 ### eval
 val_size: 0.15   # 15% of train set (~3,187 images) for validation. Monitors overfitting during training without a separate val file.
