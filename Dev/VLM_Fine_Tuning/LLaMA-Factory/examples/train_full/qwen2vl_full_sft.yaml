@@ -22,7 +22,7 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: saves/qwen2_vl-7b/full/sft
+output_dir: output/saves/qwen2_vl-7b/full/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
