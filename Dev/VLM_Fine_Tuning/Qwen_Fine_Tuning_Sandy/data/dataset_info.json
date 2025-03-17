@@ -1,4 +1,18 @@
 {
+    "uecfood256_sharegpt_train": {
+      "file_name": "uecfood256_sharegpt_train.json",
+      "columns": {
+          "text": "text",
+          "image": "image"
+      }
+    },
+    "uecfood256_sharegpt_test": {
+      "file_name": "uecfood256_sharegpt_test.json",
+      "columns": {
+          "text": "text",
+          "image": "image"
+      }
+    },
     "food_visual_instructions_train": {
         "hf_hub_url": "AdaptLLM/food-visual-instructions",
         "split": "train",
@@ -33,6 +47,14 @@
         "prompt": "instruction",
         "query": "input",
         "response": "output"
+      }
+    },
+    "text_recongnition_zh_test": {
+      "hf_hub_url": "priyank-m/chinese_text_recognition",
+      "split": "test",
+      "columns": {
+        "text": "text",
+        "image": "image"
       }
     }
 }

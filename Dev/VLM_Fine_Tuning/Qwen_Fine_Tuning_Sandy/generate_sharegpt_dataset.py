@@ -50,13 +50,13 @@ for category_id in os.listdir(root_dir):
                 user_message = {"content": f"<image>{question}", "role": "user"}
                 assistant_message = {"content": f"This is a dish called {dish_name}.", "role": "assistant"}
                 sample = {
-                    "messages": [user_message, assistant_message],
-                    "images": [image_path]
+                    "text": [user_message, assistant_message],
+                    "image": [image_path]
                 }
                 dataset.append(sample)
 
 # Extract category IDs as labels for stratification
-labels = [os.path.basename(os.path.dirname(sample["images"][0])) for sample in dataset]
+labels = [os.path.basename(os.path.dirname(sample["image"][0])) for sample in dataset]
 
 # Split the dataset into train (85%) and test (15%) sets with stratification
 train_data, test_data = train_test_split(
