@@ -38,7 +38,6 @@ warmup_ratio: 0.1
 fp16: true
 # bf16: true
 ddp_timeout: 180000000
-use_accelerate: false # Enables Hugging Face Accelerate for distributed training. false since you’re using a single GPU. Simplifies setup; set to true if scaling to multi-GPU later.
 weight_decay: 0.01
 
 report_to: wandb
