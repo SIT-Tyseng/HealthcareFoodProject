@@ -1,4 +1,5 @@
 import torch
+import random
 
 from dataclasses import dataclass
 from typing import Any, Dict, List
@@ -7,13 +8,26 @@ from transformers import Qwen2_5_VLProcessor
 
 # https://github.com/zhangfaen/finetune-Qwen2-VL/blob/main/finetune.py
 # https://github.com/roboflow/notebooks/blob/main/notebooks/how-to-finetune-qwen2-5-vl-for-json-data-extraction.ipynb
+
+questions = [
+    "What is the name of this dish?",
+    "Do you know the name of this dish?",
+    "Can you tell me what this dish is called?",
+    "What is this food called?",
+    "Please identify the name of this dish.",
+    "What dish is shown in this image?",
+    "Could you name this dish for me?",
+    "Tell me the name of this food."
+]
+
 def create_message_template(batch):
+    question = random.choice(questions)
     return [
         {
             "role": "user",
             "content": [
                 {"type": "image", "image": batch["image"]},
-                {"type": "text", "text": "請列出圖片中的文字"},
+                {"type": "text", "text": question},
             ],
         },
         {
