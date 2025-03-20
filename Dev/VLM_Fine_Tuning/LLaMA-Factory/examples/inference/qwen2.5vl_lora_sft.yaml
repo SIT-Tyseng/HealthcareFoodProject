@@ -1,4 +1,5 @@
-model_name_or_path: /app/output/qwen2_vl_lora_sft
+model_name_or_path: /app/output/qwen2.5_vl_lora_sft_1770steps
 template: qwen2_vl
 infer_backend: huggingface  # choices: [huggingface, vllm]
 trust_remote_code: true
+# compute_accuracy: true
