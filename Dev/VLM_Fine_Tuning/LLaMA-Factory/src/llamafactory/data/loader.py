@@ -260,6 +260,7 @@ def _get_preprocessed_dataset(
         batched=True,
         batch_size=data_args.preprocessing_batch_size,
         remove_columns=column_names,
+        fn_kwargs={"is_training": not is_eval},
         **kwargs,
     )
 

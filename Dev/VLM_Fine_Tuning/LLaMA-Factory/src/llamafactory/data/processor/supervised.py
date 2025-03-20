@@ -16,6 +16,8 @@ from collections import defaultdict
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Sequence, Tuple
 
+from PIL import Image
+from torchvision import transforms
 from ...extras import logging
 from ...extras.constants import IGNORE_INDEX
 from .processor_utils import DatasetProcessor, greedy_knapsack, infer_seqlen
@@ -85,10 +87,24 @@ class SupervisedDatasetProcessor(DatasetProcessor):
 
         return input_ids, labels
 
-    def preprocess_dataset(self, examples: Dict[str, List[Any]]) -> Dict[str, List[Any]]:
+    def preprocess_dataset(self, examples: Dict[str, List[Any]], is_training: bool = False) -> Dict[str, List[Any]]:
         # build inputs with format `<bos> X Y <eos>` and labels with format `<ignore> ... <ignore> Y <eos>`
         # for multiturn examples, we only mask the prompt part in each prompt-response pair.
         model_inputs = defaultdict(list)
+
+        # Image Data Augmentation
+        if is_training:
+            image_transform = transforms.Compose([
+                transforms.RandomHorizontalFlip(p=0.5),           # 50% chance to flip horizontally
+                transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Color adjustments
+                transforms.RandomRotation(degrees=15),            # Rotate up to 15 degrees
+                transforms.RandomResizedCrop(size=(224, 224), scale=(0.8, 1.0)),  # Random crop and resize
+                transforms.GaussianBlur(kernel_size=3),           # Slight blur
+                transforms.RandomGrayscale(p=0.1),                # 10% chance to convert to grayscale
+            ])
+        else:
+            image_transform = transforms.Compose([])
+
         for i in range(len(examples["_prompt"])):
             if len(examples["_prompt"][i]) % 2 != 1 or len(examples["_response"][i]) != 1:
                 logger.warning_rank0(
@@ -96,19 +112,29 @@ class SupervisedDatasetProcessor(DatasetProcessor):
                 )
                 continue
 
+            # Apply image augmentation if images are present
+            images = examples["_images"][i] or []
+            if images and is_training:
+                # Load images from file paths if they are strings
+                images = [
+                    Image.open(image_path).convert("RGB") if isinstance(image_path, str) else image_path
+                    for image_path in images
+                ]
+                images = [image_transform(image) for image in images]  # Transform each image
+
             input_ids, labels = self._encode_data_example(
                 prompt=examples["_prompt"][i],
                 response=examples["_response"][i],
                 system=examples["_system"][i],
                 tools=examples["_tools"][i],
-                images=examples["_images"][i] or [],
+                images=images,
                 videos=examples["_videos"][i] or [],
                 audios=examples["_audios"][i] or [],
             )
             model_inputs["input_ids"].append(input_ids)
             model_inputs["attention_mask"].append([1] * len(input_ids))
             model_inputs["labels"].append(labels)
-            model_inputs["images"].append(examples["_images"][i])
+            model_inputs["images"].append(images)
             model_inputs["videos"].append(examples["_videos"][i])
             model_inputs["audios"].append(examples["_audios"][i])
 
