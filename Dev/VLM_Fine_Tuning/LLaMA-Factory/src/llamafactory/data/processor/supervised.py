@@ -98,7 +98,7 @@ class SupervisedDatasetProcessor(DatasetProcessor):
                 transforms.RandomHorizontalFlip(p=0.5),           # 50% chance to flip horizontally
                 transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Color adjustments
                 transforms.RandomRotation(degrees=15),            # Rotate up to 15 degrees
-                transforms.RandomResizedCrop(size=(224, 224), scale=(0.8, 1.0)),  # Random crop and resize
+                # transforms.RandomResizedCrop(size=(224, 224), scale=(0.8, 1.0)),  # Random crop and resize 
                 transforms.GaussianBlur(kernel_size=3),           # Slight blur
                 transforms.RandomGrayscale(p=0.1),                # 10% chance to convert to grayscale
             ])
