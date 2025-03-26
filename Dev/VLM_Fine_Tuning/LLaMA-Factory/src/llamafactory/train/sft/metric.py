@@ -103,7 +103,8 @@ class ComputeSimilarity:
         if hasattr(self, "score_dict"):
             result = {k: float(np.mean(v)) for k, v in self.score_dict.items()}
 
-        self.score_dict = {"rouge-1": [], "rouge-2": [], "rouge-l": [], "bleu-4": []}
+        # self.score_dict = {"rouge-1": [], "rouge-2": [], "rouge-l": [], "bleu-4": []}
+        self.score_dict = {"accuracy": []}
         return result
 
     def __post_init__(self):
@@ -118,22 +119,37 @@ class ComputeSimilarity:
         decoded_preds = self.tokenizer.batch_decode(preds, skip_special_tokens=True)
         decoded_labels = self.tokenizer.batch_decode(labels, skip_special_tokens=True)
 
+        # Define helper function to extract food name
+        def extract_food_name(text):
+            match = re.search(r"This is a dish called (.+)", text)
+            if match:
+                return match.group(1).strip()
+            return None
+
         for pred, label in zip(decoded_preds, decoded_labels):
-            hypothesis = list(jieba.cut(pred))
-            reference = list(jieba.cut(label))
+            # hypothesis = list(jieba.cut(pred))
+            # reference = list(jieba.cut(label))
 
-            if len(" ".join(hypothesis).split()) == 0 or len(" ".join(reference).split()) == 0:
-                result = {"rouge-1": {"f": 0.0}, "rouge-2": {"f": 0.0}, "rouge-l": {"f": 0.0}}
+            # if len(" ".join(hypothesis).split()) == 0 or len(" ".join(reference).split()) == 0:
+            #     result = {"rouge-1": {"f": 0.0}, "rouge-2": {"f": 0.0}, "rouge-l": {"f": 0.0}}
+            # else:
+            #     rouge = Rouge()
+            #     scores = rouge.get_scores(" ".join(hypothesis), " ".join(reference))
+            #     result = scores[0]
+
+            # for k, v in result.items():
+            #     self.score_dict[k].append(round(v["f"] * 100, 4))
+
+            # bleu_score = sentence_bleu([list(label)], list(pred), smoothing_function=SmoothingFunction().method3)
+            # self.score_dict["bleu-4"].append(round(bleu_score * 100, 4))
+
+            # Accuracy computation
+            pred_food = extract_food_name(pred)
+            label_food = extract_food_name(label)
+            if pred_food and label_food and pred_food.lower().strip() == label_food.lower().strip():
+                self.score_dict["accuracy"].append(1.0)
             else:
-                rouge = Rouge()
-                scores = rouge.get_scores(" ".join(hypothesis), " ".join(reference))
-                result = scores[0]
-
-            for k, v in result.items():
-                self.score_dict[k].append(round(v["f"] * 100, 4))
-
-            bleu_score = sentence_bleu([list(label)], list(pred), smoothing_function=SmoothingFunction().method3)
-            self.score_dict["bleu-4"].append(round(bleu_score * 100, 4))
+                self.score_dict["accuracy"].append(0.0)
 
         if compute_result:
             return self._dump()
