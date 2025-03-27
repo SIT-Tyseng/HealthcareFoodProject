@@ -87,7 +87,36 @@ class SupervisedDatasetProcessor(DatasetProcessor):
 
         return input_ids, labels
 
-    def preprocess_dataset(self, examples: Dict[str, List[Any]], is_training: bool = False) -> Dict[str, List[Any]]:
+    def preprocess_dataset(self, examples: dict[str, list[Any]]) -> dict[str, list[Any]]:
+        # build inputs with format `<bos> X Y <eos>` and labels with format `<ignore> ... <ignore> Y <eos>`
+        # for multiturn examples, we only mask the prompt part in each prompt-response pair.
+        model_inputs = defaultdict(list)
+        for i in range(len(examples["_prompt"])):
+            if len(examples["_prompt"][i]) % 2 != 1 or len(examples["_response"][i]) != 1:
+                logger.warning_rank0(
+                    "Dropped invalid example: {}".format(examples["_prompt"][i] + examples["_response"][i])
+                )
+                continue
+
+            input_ids, labels = self._encode_data_example(
+                prompt=examples["_prompt"][i],
+                response=examples["_response"][i],
+                system=examples["_system"][i],
+                tools=examples["_tools"][i],
+                images=examples["_images"][i] or [],
+                videos=examples["_videos"][i] or [],
+                audios=examples["_audios"][i] or [],
+            )
+            model_inputs["input_ids"].append(input_ids)
+            model_inputs["attention_mask"].append([1] * len(input_ids))
+            model_inputs["labels"].append(labels)
+            model_inputs["images"].append(examples["_images"][i])
+            model_inputs["videos"].append(examples["_videos"][i])
+            model_inputs["audios"].append(examples["_audios"][i])
+
+        return model_inputs
+
+    def preprocess_dataset_with_augmentation(self, examples: Dict[str, List[Any]], is_training: bool = False) -> Dict[str, List[Any]]:
         # build inputs with format `<bos> X Y <eos>` and labels with format `<ignore> ... <ignore> Y <eos>`
         # for multiturn examples, we only mask the prompt part in each prompt-response pair.
         model_inputs = defaultdict(list)
@@ -96,11 +125,11 @@ class SupervisedDatasetProcessor(DatasetProcessor):
         if is_training:
             image_transform = transforms.Compose([
                 transforms.RandomHorizontalFlip(p=0.5),           # 50% chance to flip horizontally
-                transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Color adjustments
+                transforms.ColorJitter(brightness=0.1, contrast=0.1, saturation=0.1, hue=0.1),  # Color adjustments
                 transforms.RandomRotation(degrees=15),            # Rotate up to 15 degrees
                 # transforms.RandomResizedCrop(size=(224, 224), scale=(0.8, 1.0)),  # Random crop and resize 
-                transforms.GaussianBlur(kernel_size=3),           # Slight blur
-                transforms.RandomGrayscale(p=0.1),                # 10% chance to convert to grayscale
+                # transforms.GaussianBlur(kernel_size=3),           # Slight blur
+                # transforms.RandomGrayscale(p=0.1),                # 10% chance to convert to grayscale
             ])
         else:
             image_transform = transforms.Compose([])
