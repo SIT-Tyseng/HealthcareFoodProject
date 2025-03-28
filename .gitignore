@@ -6,4 +6,5 @@ Dev/yolov11/runs
 *.pyc
 *.json
 !Dev/VLM_Fine_Tuning/Qwen_Fine_Tuning_Sandy/data/
-!Dev/VLM_Fine_Tuning/Qwen_Fine_Tuning_Sandy/data/** 
+!Dev/VLM_Fine_Tuning/Qwen_Fine_Tuning_Sandy/data/**
+*.jpg 
