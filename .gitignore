@@ -8,3 +8,4 @@ Dev/yolov11/runs
 !Dev/VLM_Fine_Tuning/Qwen_Fine_Tuning_Sandy/data/
 !Dev/VLM_Fine_Tuning/Qwen_Fine_Tuning_Sandy/data/**
 *.jpg 
+*.webp
