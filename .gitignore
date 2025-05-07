@@ -3,8 +3,8 @@ Dev/Minicpmv2/minicpmv2/finetuning_scripts/output
 Dev/yolov11/SGFood-docker
 Dev/yolov11/datasets
 Dev/yolov11/runs
-Dev/image_viewer/node_modules
-Dev/image_viewer/sg_food_images_3
+Dev/image_reviewer/node_modules
+Dev/image_reviewer/sg_food_images_3
 *.pyc
 *.json
 !Dev/VLM_Fine_Tuning/Qwen_Fine_Tuning_Sandy/data/
