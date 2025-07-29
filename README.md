@@ -1,62 +1,31 @@
 # HealthcareFoodProject
 
-This repo is mainly focusing on nutrition assessment related models, such as VLM (Visual Language Model), LMM (Large Multi-modal Model), and NuNet (Food Mass Prediction Model). Following are the list of the models which can be found in this repo:
+This repo is the collection of development work for DishVision project, which is as shown in the following list of work:
+- [VLM fine tuning with Llamafactory](/Dev/VLM_Fine_Tuning/LLaMA-Factory)
+- [VLM fine tuning with Sandy repo](/Dev/VLM_Fine_Tuning/Qwen_Fine_Tuning_Sandy)
+- [FIR repo by student](/Dev/FIR)
+- [Webscrapper](/Dev/webscrapper)
+- [Image reviewer](/Dev/image_reviewer)
+- [FoodLMM test run](/Dev/FoodLMM)
+- [yolov11 inference](/Dev/yolov11)
 
 ---
+
+This repo is also focusing on nutrition assessment related models, such as VLM (Visual Language Model), LMM (Large Multi-modal Model), and NuNet (Food Mass Prediction Model). Following are the list of the models which can be found in this repo:
+
 ## Models
 ### VLM:
-- miniCPM
-- Qwen2.5-VL 
-- LLaVA-NEXT 
-- SAM2 
-- VILA 
-- Janus 
+- [miniCPM](/Dev/Minicpmv2)
+- [Qwen2.5-VL](/OpenSource/QwenLM) 
+- [LLaVA-NEXT](/OpenSource/LLaVA)
+- [SAM2](/OpenSource/SAM2)
+- [VILA](/OpenSource/VILA) 
+- [Janus](/OpenSource/Janus) 
 
 ### LMM:
-- FoodLLM
+- [FoodLMM](/OpenSource/FoodLMM)
 
 ### Food Mass Prediction Model:
-- NuNet
+- [NuNet](/Dev/NuNet)
 
----
-## Flash Attention installation 
-If the environment requires `flash_attn` package and the system fails to install it after using `pip install flash-attn --no-build-isolation`, go to the `wheels` directory to search for the wheel file and install it with `pip install [wheel file]`, or check out the [release page](https://github.com/Dao-AILab/flash-attention/releases) for the correct wheel file version. 
 
---- 
-## Docker 
-1. Go to the root directory of the repo: 
-```
-cd NutritionAssessmentProject
-```
-2. Run the following docker command to build the image:
-Note: It is recommended to install docker buildx for smooth image build
-```
-docker build \
---build-context wheels=./Dev/wheels \ #remove this line if docker buildx is not used
--f ./Dev/dockers/FoodLMM/Dockerfile \
--t foodlmm \
-./OpenSource/FoodLMM
-```
-3. Run the container in background mode: 
-```
-docker run -d --gpus all -v /path/to/storage:/storage -it foodlmm bash 
-```
-
-4. Access the container: 
-```
-docker exec -it <container_id> /bin/bash
-```
-
-5. Run the Deployment command:
-```
-cd app
-CUDA_VISIBLE_DEVICES=0 python online_demo.py --version=/storage/FoodLMM-Chat
-```
----
-## Download pretrain weight for Inference 
-To download the pretrain weight, use the following command 
-```
-mkdir storage && cd storage [prefer to be outside of the repo folder]
-GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/Yueha0/FoodLMM-Chat
-git lfs pull
-```
